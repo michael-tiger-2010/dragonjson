@@ -31,11 +31,11 @@ await user.id //finds ID from cache, returns it
 
 ## Installation
 
-Client libraries for languages live in [`client/`](./client/) - find the one for your language there. 
+Client libraries for languages live in [`client/`](./client/) - find the one for your language there. \
 Current languages:
  - Javascript
 
-Server libraries for languages live in [`server/`](./server/).
+Server libraries for languages live in [`server/`](./server/). \
 Current Languages:
  - NodeJS
 
