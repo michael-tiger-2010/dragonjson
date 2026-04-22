@@ -19,6 +19,7 @@ await user.id //finds ID from server, returns it
 ## Features
 
 - **Lazy loading**: only fetches data when you access it
+- **Optimized Server-Client**: server can choose to send back all data (like when accessing a single post), or just parts (like when accessing a list of all users).
 - **Automatic caching**: parent fetches are stored locally; children resolve instantly
 - **Request batching**: rapid concurrent requests are coalesced into a single round trip
 - **Mutations**: `$set`, `$add`, `$remove` with automatic cache invalidation
