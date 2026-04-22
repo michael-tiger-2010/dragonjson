@@ -10,7 +10,7 @@
  * ||    let body  = await server.posts.page1.content.body
  *
  *
- * ── INIT ────────────────────────────────────────────────────────────────────
+ * INIT ---------------------------------------------------------
  *
  * ||    const [server, control] = dragonJSON("https://mysite.com/api", {
  * ||        debug: false,
@@ -24,7 +24,7 @@
  * ||    });
  *
  *
- * ── READING ─────────────────────────────────────────────────────────────────
+ * READING ---------------------------------------------------------
  *
  * Await any path to fetch and resolve it. Parent fetches are cached, so
  * subsequent accesses to children are instant.
@@ -38,7 +38,7 @@
  * ||    await server.posts.$prefetch(["page1", "page2"])
  *
  *
- * ── CHECKING EXISTENCE ──────────────────────────────────────────────────────
+ * CHECKING EXISTENCE -----------------------------------------------------
  *
  * Check if a path is already in the local cache (no network call):
  * ||    if (await server.posts.page2.$loaded())
@@ -47,7 +47,7 @@
  * ||    if (await server.posts.page2.$exists())
  *
  *
- * ── MUTATIONS ───────────────────────────────────────────────────────────────
+ * MUTATIONS --------------------------------------------------------------
  *
  * All mutations POST to the server and expect back:
  * ||    { invalidate: ["path.to.refresh", ...] }
@@ -80,13 +80,13 @@
  *   and may return any JSON it likes. The result is returned directly to you.
  *
  *
- * ── CACHE CONTROL ───────────────────────────────────────────────────────────
+ * CACHE CONTROL ---------------------------------------------------------------
  *
  * Mark a path as stale and re-fetch it on next access:
  * ||    await server.posts.$refresh()
  *
  *
- * ── EVENTS ──────────────────────────────────────────────────────────────────
+ * EVENTS -------------------------------------------------------------------
  *
  * Listen for mutations at a specific path using .$on():
  *
@@ -124,7 +124,7 @@
  * ||    server.posts.$off("add", "*", handler, "bubble")
  *
  *
- * ── LIVE INVALIDATION ───────────────────────────────────────────────────────
+ * LIVE INVALIDATION ---------------------------------------------------------------
  *
  * Pass liveInvalidation in options to sync cache invalidations across clients
  * in real time (e.g. over a WebSocket). When one client mutates data, all
@@ -162,7 +162,7 @@
  * and configure the server to not actually set values, only validate users, etc.
  *
  *
- * ── WILDCARDS / __more ──────────────────────────────────────────────────────
+ * WILDCARDS -------------------------------------------------------------------------
  *
  * If your server returns __more: true on a node, dragonJSON treats that node
  * as having unknown children and will fetch any accessed key on demand.
@@ -170,7 +170,7 @@
  * up front (e.g. user-generated content, dynamic routes).
  *
  *
- * ── CONTROLLER ──────────────────────────────────────────────────────────────
+ * CONTROLLER ---------------------------------------------------------------------
  *
  * The second element of the return value is a control object:
  *
@@ -182,7 +182,7 @@
  * ||    control.debug.getCache()                  // dump the current cache to log
  *
  *
- * ── CONSTRAINTS ─────────────────────────────────────────────────────────────
+ * CONSTRAINTS ---------------------------------------------------------------------
  *
  * - Property names must not contain "."
  * - Property names cannot be "then" or "exists"
