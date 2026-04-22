@@ -25,11 +25,15 @@ const body = await server.posts.page1.content.body;
 
 ## Installation
 
-Client libraries for languages live in [`client/`](./client/) — find the one for your language there. 
+Client libraries for languages live in [`client/`](./client/) - find the one for your language there. 
 Current languages:
- - Javascript (web)
+ - Javascript
 
-It is pretty easy to write a client for the protocol. Read [`server/`][./server/] for more information. 
+Server libraries for languages live in [`server/`](./server/).
+Current Languages:
+ - NodeJS
+
+It is pretty easy to write a client or server for the protocol. Read [`server/`](./server/) for more information. 
 
 ---
 
