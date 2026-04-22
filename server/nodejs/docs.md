@@ -1,8 +1,8 @@
-# dragonJSON NoSQL Server
+# dragonJSON NodeJS Server
 
 A zero-dependency Node.js server that fully implements the dragonJSON client protocol.
 
-NOTE: this uses an in-memory store. If you'd like a persistence layer, just swap out `getByPath` / `setByPath` / `deleteByPath` for commands to whatever DB you want. 
+NOTE: Swap out the in-memory store to a persistant DB (file I/O, SQLite, Redis) by just swapping these functions: `getByPath` / `setByPath` / `deleteByPath`.
 
 ## Start
 
@@ -22,15 +22,22 @@ Defined at the top of `server.js` in the `authConfig` object. Shape:
 ```js
 const authConfig = {
   "pathSegment": {
-    $auth(token, accessArray) {
+    $auth(token, accessArray, operation) {
       // token       – Bearer token string (empty string if absent)
       // accessArray – path segments *after* this node
-      // return true to allow, false to deny
-      return token === "my-secret";
+      // operation   – what the client is doing:
+      //               "get"         single-path read
+      //               "get:batch"   path appeared in a ?paths= batch
+      //               "get:command" freeform $get with a command param
+      //               "set"         $set (plain POST, no __op)
+      //               "add"         $add (__op: "add")
+      //               "remove"      $remove (__op: "remove")
+      if (operation.startsWith("get")) return true;       // reads open
+      return token === "my-secret";                       // writes restricted
     },
 
     childSegment: {
-      $auth(token, accessArray) {
+      $auth(token, accessArray, operation) {
         // accessArray = segments after "pathSegment.childSegment"
         return token === "admin-only";
       }
@@ -85,23 +92,3 @@ Returns `{ items, nextCursor, total }`.
 { "action": "search", "query": "hello" }
 ```
 Returns an array of matching entries.
-
----
-
-## Extending
-
-- **Persistence** — replace the in-memory `store` with file I/O, SQLite, Redis, etc.  
-  Just keep `getByPath` / `setByPath` / `deleteByPath` pointing at your backing store.
-
-- **Live invalidation relay** — when a mutation returns `{ invalidate }`, forward that
-  payload over a WebSocket / SSE channel to other connected clients.
-
-- **More commands** — add cases to `handleCommand()` to support custom `$get` actions.
-
-- **Stricter root write protection** — add an `$auth` at the root of `authConfig`:
-  ```js
-  const authConfig = {
-    $auth(token, accessArray) { return token === "root-secret"; },
-    …
-  };
-  ```
