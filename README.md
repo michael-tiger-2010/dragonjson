@@ -10,7 +10,7 @@ const body = await server.posts.page1.content.body;
 
 // Objects are live:
 const user = await server.users["admin"];
-await user.id //finds ID from server, returns it
+await user.id //finds ID from cache, returns it
 
 ```
 
