@@ -5,8 +5,13 @@ A lazy-loading JSON client for structured API endpoints. It is like GraphQL, but
 ```js
 const [server] = dragonJSON("https://mysite.com/api");
 
-// Access deeply nested data — only the required paths are fetched
+// Access deeply nested data: only the required paths are fetched
 const body = await server.posts.page1.content.body;
+
+// Objects are live:
+const user = await server.users["admin"];
+await user.id //finds ID from server, returns it
+
 ```
 
 ---
@@ -62,7 +67,11 @@ await server.posts.$add({ title: "New Post" });
 // Remove
 await server.posts.page1.$remove();
 
-// Listen for changes
+// Get some dynamic data
+let user = server.users[username];
+await user.feed.get("hotTopics");
+
+// Listen for changes (needs liveInvalidation to be more responsive, otherwise only responds to client data)
 server.posts.$on("add", "*", (e) => console.log("New post added:", e.key));
 ```
 
