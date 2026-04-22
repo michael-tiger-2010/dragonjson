@@ -101,6 +101,13 @@ For the full server-side contract — expected request shapes, response formats,
 
 ---
 
+## Todo
+ - offline sync and conflict resolution
+ - (JS) store in IndexedDB
+ - more stability testing
+
+---
+
 ## API at a Glance
 
 | Method | Description |
